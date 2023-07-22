@@ -14,7 +14,7 @@ This project manage and provide Helm charts artifacts supporting the configurati
 
 Once Helm has been set up correctly, add the repo as follows:
 ```shell
-  helm repo add cybnity https://github.com/cybnity/iac-helm-charts
+  helm repo add cybnity https://cybnity.github.io/iac-helm-charts
 ```
 
 If you had already added this repo earlier, run `helm repo update` to retrieve the lates versions of the packages.
