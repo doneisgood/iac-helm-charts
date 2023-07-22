@@ -17,7 +17,9 @@ Once Helm has been set up correctly, add the repo as follows:
   helm repo add cybnity https://github.com/cybnity/iac-helm-charts
 ```
 
-If you had already added this repo earlier, run `helm repo update` to retrieve the lates versions of the packages. You can then run `helm search repo cybnity` to see the charts.
+If you had already added this repo earlier, run `helm repo update` to retrieve the lates versions of the packages.
+
+You can then run `helm search repo cybnity` to see the charts.
 
 To install a chart:
 ```shell
