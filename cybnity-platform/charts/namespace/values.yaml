@@ -1,0 +1,15 @@
+namespaces:
+  - cybnity-local
+  - cybnity-dev
+  - cybnity-qa
+  - cybnity-live
+
+# values authorized: keep, delete
+helmResourcePolicy: delete
+
+annotations:
+  certmanager.k8s.io/disable-validation: "true"
+
+labels: {}
+#labels:
+#  additional_label1: myvalue
