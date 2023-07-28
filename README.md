@@ -14,6 +14,8 @@ This project is supporting the CYBNITY technology actors (e.g applicative develo
 ### The project key artifacts
 This project manage and provide Helm charts artifacts supporting the configuration management (repeatable application installation) of CYBNITY systems (e.g dockerized application components delivered by the Foundation project) and their provisioning management (K8S resources: networking, load balancing, db, users, permissions...) as Infrastructure-As-Code (IaC) which allow to automate installation on multiples Kubernetes clusters (orchestration managed environments).
 
+The project's maintained charts are documented into the [cybnity-platform sub-directory](cybnity-platform/README.md).
+
 # USAGE
 [Helm](https://helm.sh) must be installed to use the charts. Please refer to Helm's [documentation](https://helm.sh.docs) to get started.
 
