@@ -587,9 +587,14 @@ nodeAffinityPreset:
 ##
 affinity: {}
 ## @param nodeSelector Node labels for pod assignment
-## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+# cybnity.io/domains-io-area: "true"
+# cybnity.io/domains-area: "true"
+# cybnity.io/user-interfaces-area: "true"
+# cybnity.io/infrastructure-services-area: "true"
 ##
-nodeSelector: {}
+nodeSelector:
+    cybnity.io/domains-io-area: "true"
+
 ## @param tolerations Tolerations for pod assignment
 ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 ##
@@ -1211,10 +1216,13 @@ metrics:
     ##
     affinity: {}
     ## @param metrics.kafka.nodeSelector Node labels for pod assignment
-    ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+    ## cybnity.io/domains-io-area: "true"
+    ## cybnity.io/domains-area: "true"
+    ## cybnity.io/user-interfaces-area: "true"
+    ## cybnity.io/infrastructure-services-area: "true"
     ##
     nodeSelector:
-        layer : domains-io-area
+        cybnity.io/domains-io-area: "true"
     ## @param metrics.kafka.tolerations Tolerations for pod assignment
     ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
     ##
@@ -1500,10 +1508,13 @@ provisioning:
   ##
   topics: []
   ## @param provisioning.nodeSelector Node labels for pod assignment
-  ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+  ## cybnity.io/domains-io-area: "true"
+  ## cybnity.io/domains-area: "true"
+  ## cybnity.io/user-interfaces-area: "true"
+  ## cybnity.io/infrastructure-services-area: "true"
   ##
   nodeSelector:
-    layer : domains-io-area
+    cybnity.io/domains-io-area: "true"
   ## @param provisioning.tolerations Tolerations for pod assignment
   ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   ##

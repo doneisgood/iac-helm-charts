@@ -384,9 +384,13 @@ nodeAffinityPreset:
 ##
 affinity: {}
 ## @param nodeSelector Node labels for pod assignment
-## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+# cybnity.io/domains-io-area: "true"
+# cybnity.io/domains-area: "true"
+# cybnity.io/user-interfaces-area: "true"
+# cybnity.io/infrastructure-services-area: "true"
 ##
-nodeSelector: {}
+nodeSelector:
+    cybnity.io/domains-io-area: "true"
 ## @param tolerations Tolerations for pod assignment
 ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 ##
