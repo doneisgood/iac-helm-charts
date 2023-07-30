@@ -171,7 +171,7 @@ graph LR
   classDef medium fill:#fff, stroke:#3a5572, color:#3a5572
   classDef mediumfill fill:#3a5572, stroke:#3a5572, color:#fff
   classDef dark fill:#0e2a43, stroke:#fff, color:#fff
-  classdef transparent fill:#0000ffff, stroke:#0000ffff
+  classDef transparent fill:#0000ffff, stroke:#0000ffff
   class clusterlocal,clusterqa,clusterprod medium;
   class is3,da3,dio3,ui3,is2,da2,dio2,ui2,unique1 mediumfill;
   class systemx,systemy,systemz,systemx2,systemx2next,systemy2,systemy2next,systemz2,systemz2next,systems2,systemx3,systemz3,systems3 dark;
