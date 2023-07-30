@@ -144,7 +144,7 @@ graph LR
   subgraph clusterprod[" #60;#60;Kubernetes Cluster#62;#62; \n Live Environment Cluster "]
       direction LR
       subgraph layerset3[" "]
-         direction LR
+         direction TB
          subgraph layerset31[" "]
             direction TB
             subgraph ui3[" #60;#60;Node#62;#62; UIA1 \n cybnity.io/user-interfaces-area:true "]
