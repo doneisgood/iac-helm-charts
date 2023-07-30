@@ -103,37 +103,37 @@ flowchart LR
 
   subgraph clusterlocal["\n #60;#60;Kubernetes Cluster#62;#62; \n Local Dev Environment Cluster "]
       direction LR
-      subgraph ui[" #60;#60;Node#62;#62; Default "]
+      subgraph ui1[" #60;#60;Node#62;#62; Default "]
             direction LR
       end
   end
   subgraph clusterqa["\n #60;#60;Kubernetes Cluster#62;#62; \n QA Environment Cluster "]
       direction LR
-      subgraph ui[" #60;#60;Node#62;#62; User Interfaces Area "]
+      subgraph ui2[" #60;#60;Node#62;#62; User Interfaces Area "]
             direction LR
       end
-      subgraph di[" #60;#60;Node#62;#62; Domains I/O Area"]
+      subgraph dio2[" #60;#60;Node#62;#62; Domains I/O Area"]
             direction LR
       end
-      subgraph di[" #60;#60;Node#62;#62; Domains Area"]
+      subgraph da2[" #60;#60;Node#62;#62; Domains Area"]
             direction LR
       end
-      subgraph di[" #60;#60;Node#62;#62; Infrastructure Services Area"]
+      subgraph is2[" #60;#60;Node#62;#62; Infrastructure Services Area"]
             direction LR
       end
   end
   subgraph clusterprod["\n #60;#60;Kubernetes Cluster#62;#62; \n Live Environment Cluster "]
       direction LR
-      subgraph ui[" #60;#60;Node#62;#62; User Interfaces Area "]
+      subgraph ui3[" #60;#60;Node#62;#62; User Interfaces Area "]
             direction LR
       end
-      subgraph di[" #60;#60;Node#62;#62; Domains I/O Area"]
+      subgraph dio3[" #60;#60;Node#62;#62; Domains I/O Area"]
             direction LR
       end
-      subgraph di[" #60;#60;Node#62;#62; Domains Area"]
+      subgraph da3[" #60;#60;Node#62;#62; Domains Area"]
             direction LR
       end
-      subgraph di[" #60;#60;Node#62;#62; Infrastructure Services Area"]
+      subgraph is3[" #60;#60;Node#62;#62; Infrastructure Services Area"]
             direction LR
       end
   end
