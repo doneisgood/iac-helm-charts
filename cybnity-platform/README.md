@@ -146,7 +146,7 @@ graph LR
       subgraph layerset3[" "]
          direction TB
          subgraph layerset31[" "]
-            direction TB
+            direction LR
             subgraph ui3[" #60;#60;Node#62;#62; UIA1 \n cybnity.io/user-interfaces-area:true "]
                   direction LR
                   systemx3["System X"]
