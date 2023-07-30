@@ -35,6 +35,118 @@ Description: several generic infrastructure projects required by the CYBNITY imp
 - [ui-apis-gateway](charts/ui-apis-gateway): bitnami Helm project of NGINX and Ingress controller image provisioning, customized for the CYBNITY needs.
 
 ## PROVISIONED SYSTEMS ARCHITECTURE
+### K8S cluster nodes setting
+To deploy the CYBNITY Defense Platform according to a type of target environment, the available and defined K8s Nodes included by a K8s cluster shall be labelled for support of the CYBNITY components installation model.
+
+See the Foundation project about the implementations-line sub-directory README.md for more detail on each layer's mission.
+
+A cluster setting can be performed by DevOps responsible, or by automation system (e.g Terrafom project implementing the IaC model) that ensure a start of K8s cluster compatible for CYBNITY platform deployment that include labelled nodes according to the quantity of Nodes constitying the cluster.
+
+Each defined Node or set of Nodes (e.g multiple nodes supporting a scalability model on a specific CYBNITY target layer) shall declare its contribution to one or multiples layers via:
+- set label __cybnity.io/user-interfaces-area__ equals to __true__ to node(s) constituying the layer where users interactions are executed
+- set label __cybnity.io/domains-io-area__ equals to __true__ to node(s) constituying the layer where processing of API per domain are treated
+- set label __cybnity.io/domains-area__ equals to __true__ to node(s) constituying the layer where the applicative domains processes are performed
+- set label __cybnity.io/infrastructure-services-area__ equals to __true__ to node(s) constituying the layer where transversal infrastructure services are provided
+
+For example and help of cluster setting by a developer or DevOps, see [cluster-node-labels-add.sh](cluster-node-labels-add.sh) file that realize the labelling of 4 nodes in a distribution model that add label one each of 4 nodes as "one node per layer".
+
+#### Distribution Strategy of each CYBNITY system
+The distribution of systems is automated according the labels declared by any existing Node into the deployed cluster.
+Each CYBNITY component is configured by a Helm Chart with `NodeSelector` declaration (e.g see `values.yaml` files) that identify on with type of Node the component should be installed and started by the K8s Control Plane.
+
+For example, the reactive-messaging-gateway system is provisionned to be deployed on the Node constitying an isolated cluster part named `user-interfaces-area` with the directive indicated into its [value.yaml file](/charts/reactive-messaging-gateway/values.yaml) equals `true` that means "install this element on a node that have a defined label named cybnity.io/user-interfaces-area equals to true":
+
+```
+...
+nodeSelector:
+  cybnity.io/user-interfaces-area: "true"
+
+...
+```
+
+### Provisioning configuration about components installation
+The deployable systems configuration via Helm charts allow to deploy the platform components onto several typologies of clusters which can be based on unique node (e.g developer's workstation supported by a Minikube stack providing a Profile with only one Node) or can be based on multiples node (e.g test environment allowing quality control activities supported by a cloud K8S instance providing 4 nodes with each one dedicated to a layer; production environment supported by a cloud K8 instance providing a cluster of 10 nodes on a layer, 4 nodes on another one etc...).
+
+The dynamic search of Node labels by the system during their initialization, ensure the automatic detection of node(s) where the system shall be started.
+
+```mermaid
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+        'background': '#ffffff',
+        'fontFamily': 'arial',
+        'fontSize': '12px',
+        'primaryColor': '#fff',
+        'primaryTextColor': '#0e2a43',
+        'primaryBorderColor': '#0e2a43',
+        'secondaryColor': '#fff',
+        'secondaryTextColor': '#fff',
+        'secondaryBorderColor': '#fff',
+        'tertiaryColor': '#fff',
+        'tertiaryTextColor': '#fff',
+        'tertiaryBorderColor': '#fff',
+        'lineColor': '#0e2a43',
+        'titleColor': '#fff',
+        'textColor': '#fff',
+        'lineColor': '#0e2a43',
+        'nodeTextColor': '#fff',
+        'nodeBorder': '#0e2a43',
+        'noteTextColor': '#fff',
+        'noteBorderColor': '#fff'
+    },
+    'flowchart': { 'curve': 'monotoneY' }
+  }
+}%%
+flowchart LR
+  chart1["\n #60;#60;Helm Chart#62;#62; \n cybnity-platform "]
+
+  subgraph clusterlocal["\n #60;#60;Kubernetes Cluster#62;#62; \n Local Dev Environment Cluster "]
+      direction LR
+      subgraph ui[" #60;#60;Node#62;#62; Default "]
+            direction LR
+      end
+  end
+  subgraph clusterqa["\n #60;#60;Kubernetes Cluster#62;#62; \n QA Environment Cluster "]
+      direction LR
+      subgraph ui[" #60;#60;Node#62;#62; User Interfaces Area "]
+            direction LR
+      end
+      subgraph di[" #60;#60;Node#62;#62; Domains I/O Area"]
+            direction LR
+      end
+      subgraph di[" #60;#60;Node#62;#62; Domains Area"]
+            direction LR
+      end
+      subgraph di[" #60;#60;Node#62;#62; Infrastructure Services Area"]
+            direction LR
+      end
+  end
+  subgraph clusterprod["\n #60;#60;Kubernetes Cluster#62;#62; \n Live Environment Cluster "]
+      direction LR
+      subgraph ui[" #60;#60;Node#62;#62; User Interfaces Area "]
+            direction LR
+      end
+      subgraph di[" #60;#60;Node#62;#62; Domains I/O Area"]
+            direction LR
+      end
+      subgraph di[" #60;#60;Node#62;#62; Domains Area"]
+            direction LR
+      end
+      subgraph di[" #60;#60;Node#62;#62; Infrastructure Services Area"]
+            direction LR
+      end
+  end
+
+  chart1 -. "values.local.yaml" .-> clusterlocal
+  chart1 -. "values.qa.yaml" .-> clusterqa
+  chart1 -. "values.live.yaml" .-> clusterprod
+
+
+```
+
+### Channels Configuration
+Multiple channels are activated between systems constituying a standard CYBNITY Defense Platform deployed into a standard K8s cluster.
 
 ```mermaid
 %%{
