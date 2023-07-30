@@ -97,14 +97,14 @@ The dynamic search of Node labels by the system during their initialization, ens
     'flowchart': { 'curve': 'monotoneY' }
   }
 }%%
-flowchart LR
+graph LR
   chart1["\n #60;#60;Helm Chart#62;#62; \n cybnity-platform "]
 
   subgraph clusterlocal[" #60;#60;Kubernetes Cluster#62;#62; \n Local Dev Environment Cluster "]
       direction LR
       subgraph layerset1[" "]
          direction TB
-         subgraph unique1[" #60;#60;Node#62;#62; Default "]
+         subgraph unique1[" #60;#60;Node#62;#62; Default \n cybnity.io/user-interfaces-area:true\n cybnity.io/domains-io-area:true\n cybnity.io/domains-area:true\n cybnity.io/infrastructure-services-area:true "]
                direction LR
                systemx["System X"]
                systemy["System Y"]
@@ -201,7 +201,7 @@ Multiple channels are activated between systems constituying a standard CYBNITY 
     'flowchart': { 'curve': 'monotoneY' }
   }
 }%%
-flowchart LR
+graph LR
   subgraph cluster["Local-Env Cluster"]
      direction LR
      subgraph tunnel["Tunnel"]
