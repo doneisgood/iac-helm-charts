@@ -64,7 +64,7 @@ nodeSelector:
 ```
 
 ### Provisioning configuration about components installation
-The deployable systems configuration via Helm charts allow to deploy the platform components onto several typologies of clusters which can be based on unique node (e.g developer's workstation supported by a Minikube stack providing a Profile with only one Node) or can be based on multiples node (e.g test environment allowing quality control activities supported by a cloud K8S instance providing 4 nodes with each one dedicated to a layer; production environment supported by a cloud K8 instance providing a cluster of 10 nodes on a layer, 4 nodes on another one etc...).
+The deployable systems configuration via Helm charts allow to deploy the platform components onto several typologies of clusters which can be based on unique node (e.g developer's workstation supported by a Minikube stack providing a Profile with only one Node) or can be based on multiples node (e.g test environment allowing quality control activities supported by a cloud K8S instance providing 4 nodes with each one dedicated to a layer; production environment supported by a cloud K8 instance providing a cluster of 3 nodes on a layer, 2 nodes on another one etc...).
 
 The dynamic search of Node labels by the system during their initialization, ensure the automatic detection of node(s) where the system shall be started.
 
@@ -162,8 +162,10 @@ flowchart LR
 
   classDef medium fill:#fff, stroke:#3a5572, color:#3a5572
   classDef mediumfill fill:#3a5572, stroke:#3a5572, color:#fff
+  classDef dark fill:#0e2a43, stroke:#fff, color:#fff
   class clusterlocal,clusterqa,clusterprod medium;
   class is3,da3,dio3,ui3,is2,da2,dio2,ui2,unique1 mediumfill;
+  class systemx,systemy,systemz,systemx2,systemx2next,systemy2,systemy2next,systemz2,systemz2next,systems2 dark;
 
 ```
 
