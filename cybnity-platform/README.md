@@ -103,7 +103,7 @@ graph LR
   subgraph clusterlocal[" #60;#60;Kubernetes Cluster#62;#62; \n Local Dev Environment Cluster "]
       direction LR
       subgraph layerset1[" "]
-         direction TB
+         direction LR
          subgraph unique1[" #60;#60;Node#62;#62; Default \n cybnity.io/user-interfaces-area:true\n cybnity.io/domains-io-area:true\n cybnity.io/domains-area:true\n cybnity.io/infrastructure-services-area:true "]
                direction LR
                systemx["System X"]
@@ -116,22 +116,22 @@ graph LR
       direction LR
       subgraph layerset2[" "]
          direction TB
-         subgraph ui2[" #60;#60;Node#62;#62; User Interfaces Area "]
+         subgraph ui2[" #60;#60;Node#62;#62; User Interfaces Area \n cybnity.io/user-interfaces-area:true "]
                direction LR
                systemx2["System X"]
                systemx2next["System ..."]
          end
-         subgraph dio2[" #60;#60;Node#62;#62; Domains I/O Area"]
+         subgraph dio2[" #60;#60;Node#62;#62; Domains I/O Area \n cybnity.io/domains-io-area:true"]
                direction LR
                systemy2["System Y"]
                systemy2next["System ..."]
          end
-         subgraph da2[" #60;#60;Node#62;#62; Domains Area"]
+         subgraph da2[" #60;#60;Node#62;#62; Domains Area \n cybnity.io/domains-area:true"]
                direction LR
                systemz2["System Z"]
                systemz2next["System ..."]
          end
-         subgraph is2[" #60;#60;Node#62;#62; Infrastructure Services Area"]
+         subgraph is2[" #60;#60;Node#62;#62; Infrastructure Services Area \n cybnity.io/infrastructure-services-area:true"]
                direction LR
                systems2["System ..."]
          end
@@ -141,16 +141,16 @@ graph LR
       direction LR
       subgraph layerset3[" "]
          direction TB
-         subgraph ui3[" #60;#60;Node#62;#62; User Interfaces Area "]
+         subgraph ui3[" #60;#60;Node#62;#62; User Interfaces Area \n cybnity.io/user-interfaces-area:true "]
                direction LR
          end
-         subgraph dio3[" #60;#60;Node#62;#62; Domains I/O Area"]
+         subgraph dio3[" #60;#60;Node#62;#62; Domains I/O Area \n cybnity.io/domains-io-area:true"]
                direction LR
          end
-         subgraph da3[" #60;#60;Node#62;#62; Domains Area"]
+         subgraph da3[" #60;#60;Node#62;#62; Domains Area \n cybnity.io/domains-area:true"]
                direction LR
          end
-         subgraph is3[" #60;#60;Node#62;#62; Infrastructure Services Area"]
+         subgraph is3[" #60;#60;Node#62;#62; Infrastructure Services Area \n cybnity.io/infrastructure-services-area:true"]
                direction LR
          end
       end
