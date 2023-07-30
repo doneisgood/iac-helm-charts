@@ -105,10 +105,12 @@ graph LR
       subgraph layerset1[" "]
          direction LR
          subgraph unique1[" #60;#60;Node#62;#62; Default \n cybnity.io/user-interfaces-area:true\n cybnity.io/domains-io-area:true\n cybnity.io/domains-area:true\n cybnity.io/infrastructure-services-area:true "]
+            subgraph layercomponent1[" "]
                direction LR
                systemx["System X"]
                systemy["System Y"]
                systemz["System ..."]
+            end
          end
       end
   end
@@ -143,15 +145,19 @@ graph LR
          direction TB
          subgraph ui3[" #60;#60;Node#62;#62; User Interfaces Area \n cybnity.io/user-interfaces-area:true "]
                direction LR
+               systemx3["System X"]
          end
          subgraph dio3[" #60;#60;Node#62;#62; Domains I/O Area \n cybnity.io/domains-io-area:true"]
                direction LR
+               systemy3["System Y"]
          end
          subgraph da3[" #60;#60;Node#62;#62; Domains Area \n cybnity.io/domains-area:true"]
                direction LR
+               systemz3["System Z"]
          end
          subgraph is3[" #60;#60;Node#62;#62; Infrastructure Services Area \n cybnity.io/infrastructure-services-area:true"]
                direction LR
+               systems3["System ..."]
          end
       end
   end
@@ -165,7 +171,7 @@ graph LR
   classDef dark fill:#0e2a43, stroke:#fff, color:#fff
   class clusterlocal,clusterqa,clusterprod medium;
   class is3,da3,dio3,ui3,is2,da2,dio2,ui2,unique1 mediumfill;
-  class systemx,systemy,systemz,systemx2,systemx2next,systemy2,systemy2next,systemz2,systemz2next,systems2 dark;
+  class systemx,systemy,systemz,systemx2,systemx2next,systemy2,systemy2next,systemz2,systemz2next,systems2,systemx3,systemz3,systems3 dark;
 
 ```
 
