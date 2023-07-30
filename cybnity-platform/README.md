@@ -102,38 +102,47 @@ flowchart LR
 
   subgraph clusterlocal["\n #60;#60;Kubernetes Cluster#62;#62; \n Local Dev Environment Cluster "]
       direction LR
-      subgraph ui1[" #60;#60;Node#62;#62; Default "]
-            direction LR
+      subgraph layerset1[" "]
+         direction TB
+         subgraph ui1[" #60;#60;Node#62;#62; Default "]
+               direction LR
+         end
       end
   end
   subgraph clusterqa["\n #60;#60;Kubernetes Cluster#62;#62; \n QA Environment Cluster "]
       direction LR
-      subgraph ui2[" #60;#60;Node#62;#62; User Interfaces Area "]
-            direction LR
-      end
-      subgraph dio2[" #60;#60;Node#62;#62; Domains I/O Area"]
-            direction LR
-      end
-      subgraph da2[" #60;#60;Node#62;#62; Domains Area"]
-            direction LR
-      end
-      subgraph is2[" #60;#60;Node#62;#62; Infrastructure Services Area"]
-            direction LR
+      subgraph layerset2[" "]
+         direction TB
+         subgraph ui2[" #60;#60;Node#62;#62; User Interfaces Area "]
+               direction LR
+         end
+         subgraph dio2[" #60;#60;Node#62;#62; Domains I/O Area"]
+               direction LR
+         end
+         subgraph da2[" #60;#60;Node#62;#62; Domains Area"]
+               direction LR
+         end
+         subgraph is2[" #60;#60;Node#62;#62; Infrastructure Services Area"]
+               direction LR
+         end
       end
   end
   subgraph clusterprod["\n #60;#60;Kubernetes Cluster#62;#62; \n Live Environment Cluster "]
       direction LR
-      subgraph ui3[" #60;#60;Node#62;#62; User Interfaces Area "]
-            direction LR
-      end
-      subgraph dio3[" #60;#60;Node#62;#62; Domains I/O Area"]
-            direction LR
-      end
-      subgraph da3[" #60;#60;Node#62;#62; Domains Area"]
-            direction LR
-      end
-      subgraph is3[" #60;#60;Node#62;#62; Infrastructure Services Area"]
-            direction LR
+      subgraph layerset3[" "]
+         direction TB
+         subgraph ui3[" #60;#60;Node#62;#62; User Interfaces Area "]
+               direction LR
+         end
+         subgraph dio3[" #60;#60;Node#62;#62; Domains I/O Area"]
+               direction LR
+         end
+         subgraph da3[" #60;#60;Node#62;#62; Domains Area"]
+               direction LR
+         end
+         subgraph is3[" #60;#60;Node#62;#62; Infrastructure Services Area"]
+               direction LR
+         end
       end
   end
 
