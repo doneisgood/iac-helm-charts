@@ -54,7 +54,7 @@ For example and help of cluster setting by a developer or DevOps, see [cluster-n
 The distribution of systems is automated according the labels declared by any existing Node into the deployed cluster.
 Each CYBNITY component is configured by a Helm Chart with `NodeSelector` declaration (e.g see `values.yaml` files) that identify on with type of Node the component should be installed and started by the K8s Control Plane.
 
-For example, the reactive-messaging-gateway system is provisionned to be deployed on the Node constitying an isolated cluster part named `user-interfaces-area` with the directive indicated into its [value.yaml file](/charts/reactive-messaging-gateway/values.yaml) equals `true` that means "install this element on a node that have a defined label named cybnity.io/user-interfaces-area equals to true":
+For example, the reactive-messaging-gateway system is provisionned to be deployed on the Node constitying an isolated cluster part named `user-interfaces-area` with the directive indicated into its [value.yaml file](/charts/reactive-messaging-gateway/values.yaml) equals `true` that means _"install this element on a node that have a defined label named cybnity.io/user-interfaces-area equals to true"_:
 
 ```
 ...
