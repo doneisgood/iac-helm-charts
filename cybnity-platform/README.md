@@ -100,7 +100,7 @@ The dynamic search of Node labels by the system during their initialization, ens
 flowchart LR
   chart1["\n #60;#60;Helm Chart#62;#62; \n cybnity-platform "]
 
-  subgraph clusterlocal["\n #60;#60;Kubernetes Cluster#62;#62; \n Local Dev Environment Cluster "]
+  subgraph clusterlocal[" #60;#60;Kubernetes Cluster#62;#62; \n Local Dev Environment Cluster "]
       direction LR
       subgraph layerset1[" "]
          direction TB
@@ -109,7 +109,7 @@ flowchart LR
          end
       end
   end
-  subgraph clusterqa["\n #60;#60;Kubernetes Cluster#62;#62; \n QA Environment Cluster "]
+  subgraph clusterqa[" #60;#60;Kubernetes Cluster#62;#62; \n QA Environment Cluster "]
       direction LR
       subgraph layerset2[" "]
          direction TB
@@ -127,7 +127,7 @@ flowchart LR
          end
       end
   end
-  subgraph clusterprod["\n #60;#60;Kubernetes Cluster#62;#62; \n Live Environment Cluster "]
+  subgraph clusterprod[" #60;#60;Kubernetes Cluster#62;#62; \n Live Environment Cluster "]
       direction LR
       subgraph layerset3[" "]
          direction TB
