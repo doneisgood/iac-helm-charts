@@ -60,7 +60,6 @@ For example, the reactive-messaging-gateway system is provisionned to be deploye
 ...
 nodeSelector:
   cybnity.io/user-interfaces-area: "true"
-
 ...
 ```
 
@@ -142,6 +141,8 @@ flowchart LR
   chart1 -. "values.qa.yaml" .-> clusterqa
   chart1 -. "values.live.yaml" .-> clusterprod
 
+  classDef medium fill:#fff, stroke:#3a5572, color:#3a5572
+  class clusterlocal,clusterqa,clusterprod medium;
 
 ```
 
