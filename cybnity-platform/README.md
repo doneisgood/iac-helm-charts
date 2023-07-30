@@ -174,7 +174,7 @@ graph LR
   classDef transparent fill:#00000000, stroke:#00000000
   class clusterlocal,clusterqa,clusterprod medium;
   class is3,da3,dio3,ui3,is2,da2,dio2,ui2,unique1 mediumfill;
-  class systemx,systemy,systemz,systemx2,systemx2next,systemy2,systemy2next,systemz2,systemz2next,systems2,systemx3,systemz3,systems3 dark;
+  class systemx,systemy,systemz,systemx2,systemx2next,systemy2,systemy2next,systemz2,systemz2next,systems2,systemx3,systemy3,systemz3,systems3 dark;
   class layercomponents1,layercomponents2 transparent;
 
 ```
