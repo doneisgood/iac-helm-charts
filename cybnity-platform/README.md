@@ -104,7 +104,7 @@ flowchart LR
       direction LR
       subgraph layerset1[" "]
          direction TB
-         subgraph ui1[" #60;#60;Node#62;#62; Default "]
+         subgraph unique1[" #60;#60;Node#62;#62; Default "]
                direction LR
                systemx["System X"]
                systemy["System Y"]
@@ -161,7 +161,9 @@ flowchart LR
   chart1 -. "--values values.live.yaml" .-> clusterprod
 
   classDef medium fill:#fff, stroke:#3a5572, color:#3a5572
+  classDef mediumfill fill:#3a5572, stroke:#3a5572, color:#fff
   class clusterlocal,clusterqa,clusterprod medium;
+  class is3,da3,dio3,ui3,is2,da2,dio2,ui2,unique1 mediumfill;
 
 ```
 
