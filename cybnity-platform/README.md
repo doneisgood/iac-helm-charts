@@ -106,6 +106,9 @@ flowchart LR
          direction TB
          subgraph ui1[" #60;#60;Node#62;#62; Default "]
                direction LR
+               systemx["System X"]
+               systemy["System Y"]
+               systemz["System ..."]
          end
       end
   end
@@ -115,15 +118,22 @@ flowchart LR
          direction TB
          subgraph ui2[" #60;#60;Node#62;#62; User Interfaces Area "]
                direction LR
+               systemx2["System X"]
+               systemx2next["System ..."]
          end
          subgraph dio2[" #60;#60;Node#62;#62; Domains I/O Area"]
                direction LR
+               systemy2["System Y"]
+               systemy2next["System ..."]
          end
          subgraph da2[" #60;#60;Node#62;#62; Domains Area"]
                direction LR
+               systemz2["System Z"]
+               systemz2next["System ..."]
          end
          subgraph is2[" #60;#60;Node#62;#62; Infrastructure Services Area"]
                direction LR
+               systems2["System ..."]
          end
       end
   end
@@ -146,9 +156,9 @@ flowchart LR
       end
   end
 
-  chart1 -. "values.local.yaml" .-> clusterlocal
-  chart1 -. "values.qa.yaml" .-> clusterqa
-  chart1 -. "values.live.yaml" .-> clusterprod
+  chart1 -. "--values values.local.yaml" .-> clusterlocal
+  chart1 -. "--values values.qa.yaml" .-> clusterqa
+  chart1 -. "--values values.live.yaml" .-> clusterprod
 
   classDef medium fill:#fff, stroke:#3a5572, color:#3a5572
   class clusterlocal,clusterqa,clusterprod medium;
