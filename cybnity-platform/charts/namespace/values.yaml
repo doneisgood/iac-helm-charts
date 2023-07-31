@@ -3,6 +3,8 @@ namespaces:
   - cybnity-dev
   - cybnity-qa
   - cybnity-live
+  # To support cert-manager
+  - cert-manager
 
 # values authorized: keep, delete
 helmResourcePolicy: delete

@@ -41,8 +41,8 @@ env:
 
 imagePullSecrets: []
 # Overriding the Helm chart name ensures configuration files also change
-nameOverride: "reactive-backend-server"
-fullnameOverride: "reactive-backend-server-chart"
+nameOverride: "reactive-backend-system"
+fullnameOverride: "reactive-backend-system"
 
 # Service account name (provide an identity for process that run in a Pod; by default named 'default') in the namespace for the Helm chart generates when the cluster is runned
 serviceAccount:

@@ -28,9 +28,9 @@ If you had already added this repo earlier, run `helm repo update` to retrieve t
 
 You can then run `helm search repo cybnity` to see the charts.
 
-To install a chart:
+To install the full platform and its components, execute from this current directory:
 ```shell
-  helm install <chart-name> cybnity/<chart-name>
+helm install <platform-logical-name> ./cybnity-platform
 ```
 
 To uninstall a chart:
