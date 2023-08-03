@@ -32,6 +32,10 @@ Description: several generic infrastructure projects required by the CYBNITY imp
 - [users-interactions-space](charts/users-interactions-space): bitnami Helm project of Redis image provisioning, customized for the CYBNITY needs (e.g implementation of collaboration space in UI area). This provisioning project is deployable and is supported by a `bitnami/redis` version including `7.0.8-debian-11-r0` operating system libraries. This implementatio (hosted on [ArtifactHUB](https://artifacthub.io/packages/helm/goauthentik/redis)) is currently used to reduce the maintenance effort of a dedicated Helm project based on the `infrastructure\integration\system\users-interactions-broker` docker image project.
 - [domains-interactions-space](charts/domains-interactions-space): bitnami Helm project of Kafka image provisioning, customized for the CYBNITY needs (e.g implementation of collaboration space in Domains I/O area). This provisioning project is deployable and is supported by a `bitnami/kafka` version including `3.3.2-debian-11-r0` operating system libraries. This implementatio (hosted on [ArtifactHUB](https://artifacthub.io/packages/helm/bitnami/kafka)) is currently used to reduce the maintenance effort of a dedicated Helm project based on the `infrastructure\integration\system\domains-interactions-broker` docker image project.
    - [dis-brokers-registry-system](charts/domains-interactions-space/charts/zookeeper): included sub-project of Zookeeper image provisioning, customized for the CYBNITY needs (e.g included as implementation of Kafka brokers registry). This provisioning project is deployable and is supported by a `bitnami/zookeeper` version including a `3.8.0-debian-11-r74` operating system libraries. This implementation (hosted on [ArtifactHUB](https://artifacthub.io/packages/helm/riftbit/zookeeper)) is currently used to reduce the maintenance effort of a dedicated Helm project based on the `framework\services-registry-container` docker image project.
+
+- [Keycloak server](/charts/access-control-sso): bitnami Helm project of Keycloak image provisioning, customized for the CYBNITY needs. This provisioning project is deployable and is supported by a `bitnami/keycloak 13.4.0` version hosted on `20.0.5-debian-11-r4` operating system version, and including a `postgresql 12.2.1` database version deployment. This implementation (hosted on [GitHUB](https://github.com/bitnami/charts/tree/main/bitnami/keycloak)) is currently used to reduce the maintenance effort of a dedicated Helm project.
+   - Installation from command line: `helm install access-control-sso-system -f access-control-sso/values.yaml bitnami/keycloak`
+
 - [ui-apis-gateway](charts/ui-apis-gateway): bitnami Helm project of NGINX and Ingress controller image provisioning, customized for the CYBNITY needs.
 
 ## PROVISIONED SYSTEMS ARCHITECTURE
@@ -48,7 +52,7 @@ Each defined Node or set of Nodes (e.g multiple nodes supporting a scalability m
 - set label __cybnity.io/domains-area__ equals to __true__ to node(s) constituying the layer where the applicative domains processes are performed
 - set label __cybnity.io/infrastructure-services-area__ equals to __true__ to node(s) constituying the layer where transversal infrastructure services are provided
 
-For example and help of cluster setting by a developer or DevOps, see [cluster-node-labels-add.sh](cluster-node-labels-add.sh) file that realize the labelling of 4 nodes in a distribution model that add label one each of 4 nodes as "one node per layer".
+For example and helping the cluster setting by a developer or DevOps, see [cluster-node-labels-add.sh](cluster-node-labels-add.sh) file that realize the labelling of 4 nodes in a distribution model that add label one each of 4 nodes as "one node per layer".
 
 #### Distribution Strategy of each CYBNITY system
 The distribution of systems is automated according the labels declared by any existing Node into the deployed cluster.
