@@ -14,24 +14,26 @@ This project is supporting the CYBNITY technology actors (e.g applicative develo
 ### The project key artifacts
 This project manage and provide Helm charts artifacts supporting the configuration management (repeatable application installation) of CYBNITY systems (e.g dockerized application components delivered by the Foundation project) and their provisioning management (K8S resources: networking, load balancing, db, users, permissions...) as Infrastructure-As-Code (IaC) which allow to automate installation on multiples Kubernetes clusters (orchestration managed environments).
 
+The project's maintained charts are documented into the [cybnity-platform sub-directory](cybnity-platform/README.md).
+
 # USAGE
 [Helm](https://helm.sh) must be installed to use the charts. Please refer to Helm's [documentation](https://helm.sh.docs) to get started.
 
 Once Helm has been set up correctly, add the repo as follows:
 ```shell
-  helm repo add cybnity https://cybnity.github.io/iac-helm-charts
+helm repo add cybnity https://cybnity.github.io/iac-helm-charts
 ```
 
 If you had already added this repo earlier, run `helm repo update` to retrieve the lates versions of the packages.
 
 You can then run `helm search repo cybnity` to see the charts.
 
-To install a chart:
+To install the full platform and its components, execute from this current directory:
 ```shell
-  helm install <chart-name> cybnity/<chart-name>
+helm install <platform-logical-name> ./cybnity-platform
 ```
 
 To uninstall a chart:
 ```shell
-  helm delete <chart-name>
+helm delete <chart-name>
 ```

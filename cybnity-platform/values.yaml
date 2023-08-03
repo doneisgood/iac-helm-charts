@@ -3,18 +3,7 @@
 # Declare variables to be passed into your templates.
 # Default values for cybnity-platform.
 # This is a YAML-formatted file specific to the environment
-
 # Declare variables to be passed into the templates.
-
-# Redefine values per module sub-chart to assign them on a layer node
-# cybnity.io/domains-io-area: true
-# cybnity.io/domains-area: true
-# cybnity.io/user-interfaces-area: true
-# cybnity.io/infrastructure-services-area: true
-domains-interactions-space:
-  nodeSelector:
-    layer: domains-io-area
-    cybnity.io/domains-io-area: true
 
 ## @section Global parameters
 ## Global Docker image parameters
