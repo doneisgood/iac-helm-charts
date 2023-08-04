@@ -9,24 +9,29 @@ on:
     #  - '**.yaml'
 
 jobs:
-  package-and-release:
+  package:
     name: Package
     # depending on default permission settings for the organization (contents being read-only or read-write for workloads), required to add permissions
     # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
     permissions:
       # permits an action to upload and publish packaged files
       contents: write
-      pull-requests: write
+      #pull-requests: write
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ github.token }}
       GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
     steps:
       - name: Helm source codes checkout
+        id: checkout_step
         uses: actions/checkout@v3
         with:
+          repository: ${{ github.repository }}
+          token: ${{ github.token }}
+          ref: ${{ inputs.branch_name }}
+        #with:
           #persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
-          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+        #  fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
 
       - name: Configure Git
         run: |
@@ -41,27 +46,33 @@ jobs:
         run: |
           PACKAGE_VERSION_NAME="0.1.0+$(git rev-parse --short "$GITHUB_SHA")"
           helm package cybnity-platform --version "$PACKAGE_VERSION_NAME" -d packages
-
-      - name: Package publish to Dockerhub repository
-        uses: atomicfi-engineering/action-build-push-chart-oci-registry@v1.3.0
-        with:
-          # See doc : https://github.com/atomicfi-engineering/action-build-push-chart-oci-registry
-          # Path to chart. Required
-          chart-path: "packages/cybnity-platform-0.1.0+$(git rev-parse --short $GITHUB_SHA).tgz"
-          # URL of registry, excluding the protocol. Required.
-          registry-url: registry-1.docker.io
-          # Repository in registry to push to
-          repository: cybnity
-          # Username to login to registry
-          username: cybnity
-          # Password to login to registry
-          password: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
-          # Sets whether or not to update dependencies before packaging
-          # Default: true
-          update-dependencies: "true"
-          # Enables step to delete all `*.tgz` files
-          # Default: true
-          delete-tgzs: "true"
+          
+  publish:
+    name: Package publish to Dockerhub repository
+    if: ${{ success() }}
+    #uses: atomicfi-engineering/action-build-push-chart-oci-registry@v1.3.0
+    uses: ./.github/workflows/push-chart-oci-registry.yml
+    needs: [package]
+    with:
+      config-path: ${{ needs.package.steps.checkout_step.ref }}
+      # See doc : https://github.com/atomicfi-engineering/action-build-push-chart-oci-registry
+      # Path to chart. Required
+      chart-path: "packages/cybnity-platform-0.1.0+$(git rev-parse --short $GITHUB_SHA).tgz"
+      # URL of registry, excluding the protocol. Required.
+      registry-url: registry-1.docker.io
+      # Repository in registry to push to
+      repository: cybnity
+      # Username to login to registry
+      username: cybnity
+      # Password to login to registry
+      password: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
+      # Sets whether or not to update dependencies before packaging
+      # Default: true
+      update-dependencies: "true"
+      # Enables step to delete all `*.tgz` files
+      # Default: true
+      delete-tgzs: "true"
+    secrets: inherit
           
      # - name: Packaged Artifact Commit
      #   run: |
