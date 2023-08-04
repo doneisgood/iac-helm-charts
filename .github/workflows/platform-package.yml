@@ -35,7 +35,7 @@ jobs:
 
       - name: Helm Package
         run: |
-          helm package cybnity-platform --version "0.1.0+$(git rev-parse --short "$GITHUB_SHA")" -d ../target-repository
+          helm package cybnity-platform --version "0.1.0+$(git rev-parse --short "$GITHUB_SHA")" -d /target-repository
           
       #- name: Helm Push
       #  env:
@@ -52,7 +52,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Helm package copy to repository
         env:
-          SRC_FOLDER_PATH: '../target-repository'
+          SRC_FOLDER_PATH: '/target-repository'
           TARGET_BRANCH: 'gh-branch'
         run: |
           files=$(find $SRC_FOLDER_PATH -type f) # get the file list
