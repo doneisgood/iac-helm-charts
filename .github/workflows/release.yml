@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - '**.tgz'
 
 jobs:
   release:
@@ -15,7 +17,7 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ github.token }}
     steps:
-      - name: Checkout
+      - name: Helm source codes checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -25,9 +27,24 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Install Helm
+      - name: Install Helm tool
         uses: azure/setup-helm@v3
 
+      - name: Helm Package
+        run: helm package cybnity-platform --version "0.1.0+$(git rev-parse --short "$GITHUB_SHA")" -d helm-chart-repository
+
+      - name: Helm Push
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config --global user.name "$GITHUB_ACTOR"
+          CHART_PACKAGE_NAME="cybnity-platform-0.1.0+$(git rev-parse --short "$GITHUB_SHA").tgz"
+          cd iac-helm-charts
+          git add "$CHART_PACKAGE_NAME"
+          git commit -m "$CHART_PACKAGE_NAME"
+          git push origin main
+          
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.5.0
         with:
