@@ -327,7 +327,7 @@ When cluster is started, the CYBNITY access via browser is possible after start 
 
 To start VPN tunnel:
 ```shell
-minikube tunnel -p local-env2
+minikube tunnel -p local-env4
 ```
 
 ## SSO server configuration
