@@ -320,3 +320,15 @@ graph LR
   class controlplane reddot;
 
 ```
+
+# CYBNITY PLATFORM USAGE
+## VPN tunnel to K8s cluster
+When cluster is started, the CYBNITY access via browser is possible after start of a VPN tunnel.
+
+To start VPN tunnel:
+```shell
+minikube tunnel -p local-env2
+```
+
+## SSO server configuration
+The access to Keycloak configuration is allowed via url externally exposed by the deployed APIs gateway (HAProxy service) on port 80 according to `http:<<external ip>>/auth`.
