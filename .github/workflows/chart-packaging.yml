@@ -59,9 +59,9 @@ jobs:
       
       - name: Push changes
         uses: ad-m/github-push-action@master
-          with:
-            github_token: ${{ github.token }}
-            branch: ${{ github.ref }}
+        with:
+          github_token: ${{ github.token }}
+          branch: ${{ github.ref }}
         
           #git push origin main:refs/heads/gh-branch
           
