@@ -1,20 +1,20 @@
-name: Platform Charts Build
+name: Charts Packaging
 
 on:
   push:
     branches:
-      - gh-branch
+      - main
     #paths:
     #  - '**.tgz'
     #  - '**.yaml'
 
 jobs:
   package-and-release:
-    name: Package & Release
+    name: Package
     # depending on default permission settings for the organization (contents being read-only or read-write for workloads), required to add permissions
     # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
     permissions:
-      # permits an action to upload and publish packaged files and to update index.yaml file
+      # permits an action to upload and publish packaged files
       contents: write
     runs-on: ubuntu-latest
     env:
@@ -37,7 +37,7 @@ jobs:
       - name: Helm Packaging
         run: |
           PACKAGE_VERSION_NAME="0.1.0+$(git rev-parse --short "$GITHUB_SHA")"
-          helm package cybnity-platform --version "$PACKAGE_VERSION_NAME" -d repository
+          helm package cybnity-platform --version "$PACKAGE_VERSION_NAME" -d packages
           
       - name: Commit Packaged Artifact
         env:
@@ -46,7 +46,7 @@ jobs:
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git config --global user.name "$GITHUB_ACTOR"
           CHART_PACKAGE_NAME="cybnity-platform-0.1.0+$(git rev-parse --short "$GITHUB_SHA").tgz"
-          cd repository
+          cd packages
           git add "$CHART_PACKAGE_NAME"
           git commit -m "$CHART_PACKAGE_NAME"
           git push origin main
