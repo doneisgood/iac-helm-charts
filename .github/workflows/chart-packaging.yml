@@ -20,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ github.token }}
+      GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
     steps:
       - name: Helm source codes checkout
         uses: actions/checkout@v3
@@ -44,6 +45,7 @@ jobs:
         run: |
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git config user.name "$GITHUB_ACTOR"
+          git config --global url.https://$GH_ACCESS_TOKEN@github.com/.insteadOf https://github.com/
           CHART_PACKAGE_NAME="cybnity-platform-0.1.0+$(git rev-parse --short "$GITHUB_SHA").tgz"
           cd packages
           git add "$CHART_PACKAGE_NAME"
