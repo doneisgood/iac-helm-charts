@@ -40,7 +40,7 @@ jobs:
 
       - name: Helm Packaging
         run: |
-          PACKAGE_VERSION_NAME="0.1.0+$(git rev-parse --short "$GITHUB_SHA").tgz"
+          PACKAGE_VERSION_NAME="0.1.0+$(git rev-parse --short "$GITHUB_SHA")"
           helm package cybnity-platform --version "$PACKAGE_VERSION_NAME" -d repository
           # copy packaged artifact to transport zone
           #CHART_PACKAGE_NAME="cybnity-platform-"$PACKAGE_VERSION_NAME".tgz"
