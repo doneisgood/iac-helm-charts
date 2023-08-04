@@ -45,7 +45,7 @@ jobs:
           cd helm-chart-repository
           git add "$CHART_PACKAGE_NAME"
           git commit -m "$CHART_PACKAGE_NAME"
-          git push origin gh-branch
+          git push origin main:refs/heads/gh-branch
           
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.5.0
