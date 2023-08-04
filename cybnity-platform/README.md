@@ -331,4 +331,4 @@ minikube tunnel -p local-env4
 ```
 
 ## SSO server configuration
-The access to Keycloak configuration is allowed via url externally exposed by the deployed APIs gateway (HAProxy service) on port 80 according to `http:<<external ip>>/auth`.
+The access to Keycloak configuration is allowed via url externally exposed by the deployed APIs gateway (HAProxy service) on port 80 according to `http:<<external ip>>/auth/`.
