@@ -41,7 +41,7 @@ jobs:
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git config --global user.name "$GITHUB_ACTOR"
           CHART_PACKAGE_NAME="cybnity-platform-0.1.0+$(git rev-parse --short "$GITHUB_SHA").tgz"
-          cd iac-helm-charts
+          cd helm-chart-repository
           git add "$CHART_PACKAGE_NAME"
           git commit -m "$CHART_PACKAGE_NAME"
           git push origin main
