@@ -9,10 +9,11 @@ on:
     #  - '**.yaml'
 
 jobs:
-  release:
+  build-and-release:
     # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
     # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
     permissions:
+      # permits an action to upload and publish packaged files into GitHub page branch and to update index.yaml file in pages branche
       contents: write
     runs-on: ubuntu-latest
     env:
@@ -44,13 +45,12 @@ jobs:
           cd helm-chart-repository
           git add "$CHART_PACKAGE_NAME"
           git commit -m "$CHART_PACKAGE_NAME"
-          git push origin main
+          git push origin gh-branch
           
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.5.0
         with:
           charts_dir: charts
           skip_packaging: 'false'
-          version: 'latest'
         env:
           CR_TOKEN: ${{ github.token }}
