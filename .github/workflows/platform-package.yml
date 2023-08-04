@@ -1,11 +1,12 @@
-name: Release Charts
+name: Package Platform Charts
 
 on:
   push:
     branches:
       - main
-    paths:
-      - '**.tgz'
+    #paths:
+    #  - '**.tgz'
+    #  - '**.yaml'
 
 jobs:
   release:
