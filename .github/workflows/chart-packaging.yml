@@ -32,7 +32,7 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git config --global url.https://$GH_ACCESS_TOKEN@github.com/.insteadOf https://github.com/
+          # git config --global url.https://$GH_ACCESS_TOKEN@github.com/.insteadOf https://github.com/
           
       - name: Install Helm tool
         uses: azure/setup-helm@v3
@@ -41,20 +41,41 @@ jobs:
         run: |
           PACKAGE_VERSION_NAME="0.1.0+$(git rev-parse --short "$GITHUB_SHA")"
           helm package cybnity-platform --version "$PACKAGE_VERSION_NAME" -d packages
+
+      - name: Package publish to Dockerhub repository
+        uses: atomicfi-engineering/action-build-push-chart-oci-registry@undefined
+        with:
+          # See doc : https://github.com/atomicfi-engineering/action-build-push-chart-oci-registry
+          # Path to chart. Required
+          chart-path: "packages/cybnity-platform-0.1.0+$(git rev-parse --short $GITHUB_SHA).tgz"
+          # URL of registry, excluding the protocol. Required.
+          registry-url: registry-1.docker.io
+          # Repository in registry to push to
+          repository: cybnity
+          # Username to login to registry
+          username: cybnity
+          # Password to login to registry
+          password: ${{ secret.DOCKERHUB_OLIVIER_PATH }}
+          # Sets whether or not to update dependencies before packaging
+          # Default: true
+          update-dependencies: "true"
+          # Enables step to delete all `*.tgz` files
+          # Default: true
+          delete-tgzs: "true"
           
-      - name: Packaged Artifact Commit
-        run: |
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git config user.name "$GITHUB_ACTOR"
-          git config --global url.https://$GH_ACCESS_TOKEN@github.com/.insteadOf https://github.com/
-          git remote -v
-          git fetch
-          git checkout main
-          CHART_PACKAGE_NAME="cybnity-platform-0.1.0+$(git rev-parse --short "$GITHUB_SHA").tgz"
-          cd packages
-          git add "$CHART_PACKAGE_NAME"
-          git commit -m "$CHART_PACKAGE_NAME $(date +%FT%T)"
-          git push origin main
+     # - name: Packaged Artifact Commit
+     #   run: |
+     #     git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+     #     git config user.name "$GITHUB_ACTOR"
+     #     git config --global url.https://$GH_ACCESS_TOKEN@github.com/.insteadOf https://github.com/
+     #     git remote -v
+     #     git fetch
+     #     git checkout main
+     #     CHART_PACKAGE_NAME="cybnity-platform-0.1.0+$(git rev-parse --short "$GITHUB_SHA").tgz"
+     #     cd packages
+     #     git add "$CHART_PACKAGE_NAME"
+     #     git commit -m "$CHART_PACKAGE_NAME $(date +%FT%T)"
+     #     git push origin main
       
      # - name: Pull Request about packages
      #   run: |
