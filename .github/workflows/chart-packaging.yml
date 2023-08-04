@@ -55,7 +55,7 @@ jobs:
           # Username to login to registry
           username: cybnity
           # Password to login to registry
-          password: ${{ secret.DOCKERHUB_OLIVIER_PATH }}
+          password: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
           # Sets whether or not to update dependencies before packaging
           # Default: true
           update-dependencies: "true"
