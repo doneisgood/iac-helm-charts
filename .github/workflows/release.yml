@@ -33,4 +33,4 @@ jobs:
           skip_packaging: false
           version: 'latest'
         env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_TOKEN: ${{ github.token }}
