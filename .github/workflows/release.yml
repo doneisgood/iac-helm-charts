@@ -34,3 +34,4 @@ jobs:
           version: 'latest'
         env:
           CR_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
