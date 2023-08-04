@@ -46,7 +46,7 @@ jobs:
         run: |
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git config user.name "$GITHUB_ACTOR"
-          # git config --global url.https://$GH_ACCESS_TOKEN@github.com/.insteadOf https://github.com/
+          git config --global url.https://$GH_ACCESS_TOKEN@github.com/.insteadOf https://github.com/
           git remote -v
           git fetch
           git checkout main
