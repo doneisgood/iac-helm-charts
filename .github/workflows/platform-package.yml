@@ -3,8 +3,7 @@ name: Platform Charts Build
 on:
   push:
     branches:
-    #  - gh-branch
-       - main
+      - gh-branch
     #paths:
     #  - '**.tgz'
     #  - '**.yaml'
@@ -12,18 +11,15 @@ on:
 jobs:
   package-and-release:
     name: Package & Release
-    # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
+    # depending on default permission settings for the organization (contents being read-only or read-write for workloads), required to add permissions
     # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
     permissions:
-      # permits an action to upload and publish packaged files into GitHub page branch and to update index.yaml file in pages branche
+      # permits an action to upload and publish packaged files and to update index.yaml file
       contents: write
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ github.token }}
     steps:
-      #- name: Directory preparation
-      #  run: mkdir transport
-        
       - name: Helm source codes checkout
         uses: actions/checkout@v3
         with:
@@ -42,10 +38,6 @@ jobs:
         run: |
           PACKAGE_VERSION_NAME="0.1.0+$(git rev-parse --short "$GITHUB_SHA")"
           helm package cybnity-platform --version "$PACKAGE_VERSION_NAME" -d repository
-          # copy packaged artifact to transport zone
-          #CHART_PACKAGE_NAME="cybnity-platform-"$PACKAGE_VERSION_NAME".tgz"
-          #mv CHART_PACKAGE_NAME transport
-          #cd /transport
           
       - name: Commit Packaged Artifact
         env:
@@ -57,12 +49,13 @@ jobs:
           cd repository
           git add "$CHART_PACKAGE_NAME"
           git commit -m "$CHART_PACKAGE_NAME"
+          git push origin main
           
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ github.token }}
-          branch: ${{ github.ref }}
+      #- name: Push changes
+      #  uses: ad-m/github-push-action@master
+      #  with:
+      #    github_token: ${{ github.token }}
+      #    branch: ${{ github.ref }}
         
           #git push origin main:refs/heads/gh-branch
           
