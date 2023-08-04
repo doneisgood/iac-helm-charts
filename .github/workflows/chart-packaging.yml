@@ -21,6 +21,27 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ github.token }}
       #GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+      DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_ACCESS_ACCOUNT }}
+      DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_ACCESS_TOKEN }}
+      OCI_PATH: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
+      config-path: ${{ needs.package.steps.checkout_step.ref }}
+      # See doc : https://github.com/atomicfi-engineering/action-build-push-chart-oci-registry
+      # Path to chart. Required
+      chart-path: "packages/cybnity-platform-0.1.0+$(git rev-parse --short $GITHUB_SHA).tgz"
+      # URL of registry, excluding the protocol. Required.
+      registry-url: registry-1.docker.io
+      # Repository in registry to push to
+      repository: cybnity
+      # Username to login to registry
+      username: cybnity
+      # Password to login to registry
+      # password: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
+      # Sets whether or not to update dependencies before packaging
+      # Default: true
+      update-dependencies: true
+      # Enables step to delete all `*.tgz` files
+      # Default: true
+      delete-tgzs: true
     steps:
       - name: Helm source codes checkout
         id: checkout_step
@@ -46,33 +67,65 @@ jobs:
         run: |
           PACKAGE_VERSION_NAME="0.1.0+$(git rev-parse --short "$GITHUB_SHA")"
           helm package cybnity-platform --version "$PACKAGE_VERSION_NAME" -d packages
+
+      - if: ${{ env.update-dependencies }}
+        name: Update Chart Dependencies
+        shell: bash
+        run: |
+          helm dependency update ${{ env.chart-path }}
+      - name: Package Chart
+        shell: bash
+        run: |
+          helm package ${{ env.chart-path }}
+      - name: Helm Registry Login
+        shell: bash
+        run: |
+          helm registry login \
+          --username ${{ env.username }} \
+          --password ${{ env.OCI_PATH }} \
+          ${{ env.registry-url }}
+      - name: Push Chart
+        shell: bash
+        run: |
+          for file in *.tgz; do
+            [ -f "$file" ] || continue
+            helm push $file oci://${{ env.registry-url }}/${{ env.repository }}
+          done
+      - name: Delete Chart Tarballs
+        if: ${{ env.delete-tgzs }} == true
+        shell: bash
+        run: |
+          for file in *.tgz; do
+            [ -f "$file" ] || continue
+            rm $file
+          done
           
-  publish:
-    name: Package publish to Dockerhub repository
-    if: ${{ success() }}
+  #publish:
+  #  name: Package publish to Dockerhub repository
+  #  if: ${{ success() }}
     #uses: atomicfi-engineering/action-build-push-chart-oci-registry@v1.3.0
-    uses: ./.github/workflows/push-chart-oci-registry.yml
-    needs: [package]
-    with:
-      config-path: ${{ needs.package.steps.checkout_step.ref }}
+  #  uses: ./.github/workflows/push-chart-oci-registry.yml
+  #  needs: [package]
+  #  with:
+  #    config-path: ${{ needs.package.steps.checkout_step.ref }}
       # See doc : https://github.com/atomicfi-engineering/action-build-push-chart-oci-registry
       # Path to chart. Required
-      chart-path: "packages/cybnity-platform-0.1.0+$(git rev-parse --short $GITHUB_SHA).tgz"
+  #    chart-path: "packages/cybnity-platform-0.1.0+$(git rev-parse --short $GITHUB_SHA).tgz"
       # URL of registry, excluding the protocol. Required.
-      registry-url: registry-1.docker.io
+  #    registry-url: registry-1.docker.io
       # Repository in registry to push to
-      repository: cybnity
+  #    repository: cybnity
       # Username to login to registry
-      username: cybnity
+  #    username: cybnity
       # Password to login to registry
       # password: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
       # Sets whether or not to update dependencies before packaging
       # Default: true
-      update-dependencies: true
+  #    update-dependencies: true
       # Enables step to delete all `*.tgz` files
       # Default: true
-      delete-tgzs: true
-    secrets: inherit
+  #    delete-tgzs: true
+  #  secrets: inherit
           
      # - name: Packaged Artifact Commit
      #   run: |
