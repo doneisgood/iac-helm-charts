@@ -1,4 +1,4 @@
-name: Package Platform Charts
+name: Platform Charts Build
 
 on:
   push:
@@ -9,7 +9,8 @@ on:
     #  - '**.yaml'
 
 jobs:
-  build-and-release:
+  package-and-release:
+    name: Package & Release
     # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
     # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
     permissions:
@@ -33,7 +34,7 @@ jobs:
         uses: azure/setup-helm@v3
 
       - name: Helm Package
-        run: helm package cybnity-platform --version "0.1.0+$(git rev-parse --short "$GITHUB_SHA")" -d helm-chart-repository
+        run: helm package cybnity-platform --version "0.1.0+$(git rev-parse --short "$GITHUB_SHA")" -d repository
 
       - name: Helm Push
         env:
@@ -42,7 +43,7 @@ jobs:
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git config --global user.name "$GITHUB_ACTOR"
           CHART_PACKAGE_NAME="cybnity-platform-0.1.0+$(git rev-parse --short "$GITHUB_SHA").tgz"
-          cd helm-chart-repository
+          cd repository
           git add "$CHART_PACKAGE_NAME"
           git commit -m "$CHART_PACKAGE_NAME"
           git push origin main:refs/heads/gh-branch
@@ -50,7 +51,7 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.5.0
         with:
-          charts_dir: charts
+          charts_dir: repository
           skip_packaging: 'false'
         env:
           CR_TOKEN: ${{ github.token }}
