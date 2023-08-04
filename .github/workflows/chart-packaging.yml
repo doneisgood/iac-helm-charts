@@ -16,6 +16,7 @@ jobs:
     permissions:
       # permits an action to upload and publish packaged files
       contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ github.token }}
