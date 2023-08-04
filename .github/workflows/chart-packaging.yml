@@ -43,7 +43,7 @@ jobs:
           helm package cybnity-platform --version "$PACKAGE_VERSION_NAME" -d packages
 
       - name: Package publish to Dockerhub repository
-        uses: atomicfi-engineering/action-build-push-chart-oci-registry@undefined
+        uses: atomicfi-engineering/action-build-push-chart-oci-registry@v1.3.0
         with:
           # See doc : https://github.com/atomicfi-engineering/action-build-push-chart-oci-registry
           # Path to chart. Required
