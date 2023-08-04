@@ -53,16 +53,15 @@ jobs:
           git commit -m "$CHART_PACKAGE_NAME"
         # git push origin main
           
-      - name: Pull Request about packages
-        run: |
-          gh pr create -B ${{ github.ref }} -H branch_to_merge --title 'Merge branch_to_merge into ${{ github.ref }}' --body 'Created by Github action (chart-packaging.yml workflow)'
+     # - name: Pull Request about packages
+     #   run: |
+     #     gh pr create -B ${{ github.ref }} -H branch_to_merge --title 'Merge branch_to_merge into ${{ github.ref }}' --body 'Created by Github action (chart-packaging.yml workflow)'
       
-          
-      #- name: Push changes
-      #  uses: ad-m/github-push-action@master
-      #  with:
-      #    github_token: ${{ github.token }}
-      #    branch: ${{ github.ref }}
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+          with:
+            github_token: ${{ github.token }}
+            branch: ${{ github.ref }}
         
           #git push origin main:refs/heads/gh-branch
           
