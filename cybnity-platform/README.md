@@ -52,7 +52,7 @@ Each defined Node or set of Nodes (e.g multiple nodes supporting a scalability m
 - set label __cybnity.io/domains-area__ equals to __true__ to node(s) constituying the layer where the applicative domains processes are performed
 - set label __cybnity.io/infrastructure-services-area__ equals to __true__ to node(s) constituying the layer where transversal infrastructure services are provided
 
-For example and helping the cluster setting by a developer or DevOps, see [cluster-node-labels-add.sh](cluster-node-labels-add.sh) file that realize the labelling of 4 nodes in a distribution model that add label one each of 4 nodes as "one node per layer".
+For example and helping the cluster setting by a developer or DevOps, see [cluster-node-labels-add.sh](../cluster-node-labels-add.sh) file that realize the labelling of 4 nodes in a distribution model that add label one each of 4 nodes as "one node per layer".
 
 #### Distribution Strategy of each CYBNITY system
 The distribution of systems is automated according the labels declared by any existing Node into the deployed cluster.
