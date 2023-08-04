@@ -42,6 +42,7 @@ jobs:
       ARTIFACT_VERSION: ${{ inputs.package_release_name }}
       DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_ACCESS_ACCOUNT }}
       DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_ACCESS_TOKEN }}
+      OCI_PATH: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
     steps:
       - name: Install Helm
         uses: azure/setup-helm@v1
@@ -61,7 +62,7 @@ jobs:
         run: |
           helm registry login \
           --username ${{ inputs.username }} \
-          --password ${{ inputs.password }} \
+          --password ${{ env.OCI_PATH }} \
           ${{ inputs.registry-url }}
       - name: Push Chart
         shell: bash
