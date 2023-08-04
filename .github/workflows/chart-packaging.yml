@@ -42,7 +42,7 @@ jobs:
           PACKAGE_VERSION_NAME="0.1.0+$(git rev-parse --short "$GITHUB_SHA")"
           helm package cybnity-platform --version "$PACKAGE_VERSION_NAME" -d packages
           
-      - name: Commit Packaged Artifact
+      - name: Packaged Artifact Commit
         run: |
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git config user.name "$GITHUB_ACTOR"
@@ -51,7 +51,12 @@ jobs:
           cd packages
           git add "$CHART_PACKAGE_NAME"
           git commit -m "$CHART_PACKAGE_NAME"
-          git push origin main
+        # git push origin main
+          
+      - name: Pull Request about packages
+        run: |
+          gh pr create -B ${{ github.ref }} -H branch_to_merge --title 'Merge branch_to_merge into ${{ github.ref }}' --body 'Created by Github action (chart-packaging.yml workflow)'
+      
           
       #- name: Push changes
       #  uses: ad-m/github-push-action@master
