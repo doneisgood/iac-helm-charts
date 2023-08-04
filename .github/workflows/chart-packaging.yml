@@ -68,10 +68,10 @@ jobs:
       # password: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
       # Sets whether or not to update dependencies before packaging
       # Default: true
-      update-dependencies: "true"
+      update-dependencies: true
       # Enables step to delete all `*.tgz` files
       # Default: true
-      delete-tgzs: "true"
+      delete-tgzs: true
     secrets: inherit
           
      # - name: Packaged Artifact Commit
