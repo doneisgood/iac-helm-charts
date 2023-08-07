@@ -58,7 +58,7 @@ jobs:
           helm package ${{ env.PACKAGED_PROJECT }} --version "$PACKAGE_VERSION_NAME" -d ${{ env.CHART_DEST }}
           ARTIFACT_FULLNAME="$PACKAGED_PROJECT-$PACKAGE_VERSION_NAME.tgz"
           echo "ARTIFACT_FULLNAME=$ARTIFACT_FULLNAME" >> $GITHUB_ENV
-          echo "CHART_PATH=${{ env.CHART_DEST }}/$ARTIFACT_FULLNAME" >> $GITHUB_ENV
+          echo "CHART_PATH=${{ env.CHART_DEST }}/${{ env.ARTIFACT_FULLNAME}}" >> $GITHUB_ENV
           
       - uses: actions/upload-artifact@v3
         # See docc at https://github.com/actions/upload-artifact
