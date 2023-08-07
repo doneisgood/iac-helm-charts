@@ -52,12 +52,13 @@ jobs:
           
       - name: Helm Packaging
         run: |
-          PACKAGE_VERSION_NAME="0.1.0+$(git rev-parse --short "$GITHUB_SHA")"
+          ## Create and package unique version based on github sha
+          PACKAGE_VERSION_NAME="$PROJECT_VERSION+$(git rev-parse --short "$GITHUB_SHA")"
           echo "PACKAGE_VERSION_NAME=$PACKAGE_VERSION_NAME" >> $GITHUB_ENV
           helm package ${{ env.PACKAGED_PROJECT }} --version "$PACKAGE_VERSION_NAME" -d ${{ env.CHART_DEST }}
           echo "ARTIFACT_FULLNAME=$PACKAGED_PROJECT-$PACKAGE_VERSION_NAME.tgz" >> $GITHUB_ENV
           echo "CHART_PATH=$CHART_DEST/$ARTIFACT_FULLNAME" >> $GITHUB_ENV
-          
+
       - uses: actions/upload-artifact@v3
         # See docc at https://github.com/actions/upload-artifact
         with:
@@ -103,4 +104,5 @@ jobs:
       - name: Push Chart
         shell: bash
         run: |
+          # Store sha version of artifact
           helm push ${{ env.PACKAGED_CHART_PATH}} oci://${{ env.registry-url }}/${{ env.repository }}
