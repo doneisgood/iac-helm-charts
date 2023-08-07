@@ -52,11 +52,10 @@ jobs:
           
       - name: Helm Packaging
         run: |
-          ## Create and package unique version based on github sha
           PACKAGE_VERSION_NAME="$PROJECT_VERSION+$(git rev-parse --short "$GITHUB_SHA")"
           echo "PACKAGE_VERSION_NAME=$PACKAGE_VERSION_NAME" >> $GITHUB_ENV
-          helm package ${{ env.PACKAGED_PROJECT }} --version ${{ env.PACKAGE_VERSION_NAME }} -d ${{ env.CHART_DEST }}
-          ARTIFACT_FULLNAME="${{ env.PACKAGED_PROJECT }}-${{ env.PACKAGE_VERSION_NAME }}.tgz"
+          helm package ${{ env.PACKAGED_PROJECT }} --version "$PACKAGE_VERSION_NAME" -d ${{ env.CHART_DEST }}
+          ARTIFACT_FULLNAME="${{ env.PACKAGED_PROJECT }}-$PACKAGE_VERSION_NAME.tgz"
           echo "ARTIFACT_FULLNAME=$ARTIFACT_FULLNAME" >> $GITHUB_ENV
           CHART_PATH="${{ env.CHART_DEST }}/${{ env.ARTIFACT_FULLNAME }}"
           echo "CHART_PATH=$CHART_PATH" >> $GITHUB_ENV
