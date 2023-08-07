@@ -92,17 +92,21 @@ jobs:
           --username ${{ env.username }} \
           --password ${{ env.OCI_PATH }} \
           ${{ env.registry-url }}
+          
       - name: Push Chart
         shell: bash
         run: |
+          cd ${{ env.CHART_DEST }}
           for file in *.tgz; do
             [ -f "$file" ] || continue
             helm push $file oci://${{ env.registry-url }}/${{ env.repository }}
           done
+          
       - name: Delete Chart Tarballs
         if: ${{ env.delete-tgzs }} == true
         shell: bash
         run: |
+          cd ${{ env.CHART_DEST }}
           for file in *.tgz; do
             [ -f "$file" ] || continue
             rm $file
