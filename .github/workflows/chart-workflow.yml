@@ -28,7 +28,7 @@ jobs:
     outputs:
       chart_path: ${{ env.CHART_PATH }}
       package_version_name:  ${{ env.PACKAGE_VERSION_NAME }}
-      
+      chart_dest: ${{ env.CHART_DEST }}
     steps:
       - name: Helm source codes checkout
         id: checkout_step
@@ -72,7 +72,7 @@ jobs:
       DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_ACCESS_TOKEN }}
       OCI_PATH: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
       PACKAGED_CHART_PATH: ${{ needs.package.outputs.chart_path }}
-      CHART_DEST: ${{ needs.package.env.CHART_DEST }}
+      CHART_DEST: ${{ needs.package.outputs.chart_dest }}
       # URL of registry, excluding the protocol. Required.
       registry-url: registry-1.docker.io
       # Repository in registry to push to
