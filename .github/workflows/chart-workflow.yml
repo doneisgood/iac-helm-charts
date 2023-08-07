@@ -83,7 +83,7 @@ jobs:
       # password: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
       # Enables step to delete all `*.tgz` files
       # Default: true
-      delete-tgzs: false
+      delete-tgzs: true
     steps:
       - name: Helm Registry Login
         shell: bash
@@ -111,11 +111,3 @@ jobs:
             [ -f "$file" ] || continue
             rm $file
           done
-
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.5.0
-        with:
-          charts_dir: ${{ env.CHART_DEST }}
-          #config: cr.yaml
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
