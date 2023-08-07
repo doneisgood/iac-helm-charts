@@ -64,8 +64,8 @@ jobs:
       - uses: actions/upload-artifact@v3
         # See docc at https://github.com/actions/upload-artifact
         with:
-          name: artifacts-directory
-          path: ${{ env.CHART_DEST }}/**/*
+          name: ${{ env.ARTIFACT_FULLNAME }}
+          path: ${{ env.CHART_PATH }}
           if-no-files-found: error
           retention-days: 5
     
@@ -81,7 +81,7 @@ jobs:
       DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_ACCESS_ACCOUNT }}
       DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_ACCESS_TOKEN }}
       OCI_PATH: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
-      PACKAGED_CHART_PATH: ${{ needs.package.outputs.chart_path }}
+      PACKAGED_CHART_PATH: ${{ needs.package.outputs.artifact_fullname }}
       CHART_DEST: ${{ needs.package.outputs.chart_dest }}
       # URL of registry, excluding the protocol. Required.
       registry-url: registry-1.docker.io
@@ -97,11 +97,10 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: artifacts-directory
+          name: ${{ env.PACKAGED_CHART_PATH }}
           
       - name: Helm Registry Login
         shell: bash
-        working-directory: artifacts-directory
         run: |
           helm registry login \
           --username ${{ env.username }} \
@@ -110,21 +109,21 @@ jobs:
           
       - name: Push Chart
         shell: bash
-        working-directory: artifacts-directory
         run: |
-          #cd ${{ env.CHART_DEST }}
-          for file in *.tgz; do
-            [ -f "$file" ] || continue
-            helm push $file oci://${{ env.registry-url }}/${{ env.repository }}
-          done
+          helm push ${{ env.PACKAGED_CHART_PATH}} oci://${{ env.registry-url }}/${{ env.repository }}
           
-      - name: Delete Chart Tarballs
-        if: ${{ env.delete-tgzs }} == true
-        shell: bash
-        working-directory: artifacts-directory
-        run: |
-          cd ${{ env.CHART_DEST }}
-          for file in *.tgz; do
-            [ -f "$file" ] || continue
-            rm $file
-          done
+          #cd ${{ env.CHART_DEST }}
+          #for file in *.tgz; do
+          #  [ -f "$file" ] || continue
+          #  helm push $file oci://${{ env.registry-url }}/${{ env.repository }}
+          #done
+          
+      #- name: Delete Chart Tarballs
+      #  if: ${{ env.delete-tgzs }} == true
+      #  shell: bash
+      #  run: |
+      #    cd ${{ env.CHART_DEST }}
+      #    for file in *.tgz; do
+      #      [ -f "$file" ] || continue
+      #      rm $file
+      #    done
