@@ -26,9 +26,6 @@ jobs:
       # Default: true
       update-dependencies: true
     outputs:
-      chart_path: ${{ env.CHART_PATH }}
-      package_version_name:  ${{ env.PACKAGE_VERSION_NAME }}
-      chart_dest: ${{ env.CHART_DEST }}
       artifact_fullname: ${{ env.ARTIFACT_FULLNAME }}
     steps:
       - name: Helm source codes checkout
@@ -82,7 +79,6 @@ jobs:
       DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_ACCESS_TOKEN }}
       OCI_PATH: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
       PACKAGED_CHART_PATH: ${{ needs.package.outputs.artifact_fullname }}
-      CHART_DEST: ${{ needs.package.outputs.chart_dest }}
       # URL of registry, excluding the protocol. Required.
       registry-url: registry-1.docker.io
       # Repository in registry to push to
@@ -91,9 +87,6 @@ jobs:
       username: cybnity
       # Password to login to registry
       # password: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
-      # Enables step to delete all `*.tgz` files
-      # Default: true
-      delete-tgzs: true
     steps:
       - uses: actions/download-artifact@v3
         with:
@@ -111,19 +104,3 @@ jobs:
         shell: bash
         run: |
           helm push ${{ env.PACKAGED_CHART_PATH}} oci://${{ env.registry-url }}/${{ env.repository }}
-          
-          #cd ${{ env.CHART_DEST }}
-          #for file in *.tgz; do
-          #  [ -f "$file" ] || continue
-          #  helm push $file oci://${{ env.registry-url }}/${{ env.repository }}
-          #done
-          
-      #- name: Delete Chart Tarballs
-      #  if: ${{ env.delete-tgzs }} == true
-      #  shell: bash
-      #  run: |
-      #    cd ${{ env.CHART_DEST }}
-      #    for file in *.tgz; do
-      #      [ -f "$file" ] || continue
-      #      rm $file
-      #    done
