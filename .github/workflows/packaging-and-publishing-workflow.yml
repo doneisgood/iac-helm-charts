@@ -62,8 +62,8 @@ jobs:
       - uses: actions/upload-artifact@v3
         # See docc at https://github.com/actions/upload-artifact
         with:
-          name: ${{ env.ARTIFACT_FULLNAME }}
-          path: ${{ env.CHART_PATH }}
+          name: "${{ env.ARTIFACT_FULLNAME }}"
+          path: "${{ env.CHART_PATH }}"
           if-no-files-found: error
           retention-days: 5
     
