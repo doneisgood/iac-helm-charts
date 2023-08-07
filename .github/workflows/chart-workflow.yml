@@ -62,9 +62,12 @@ jobs:
           echo "CHART_PATH=$CHART_DEST/$ARTIFACT_FULLNAME" >> $GITHUB_ENV
           
       - uses: actions/upload-artifact@v3
+        # See docc at https://github.com/actions/upload-artifact
         with:
           name: artifacts-directory
-          path: ${{ env.CHART_DEST }}
+          path: ${{ env.CHART_DEST }}/**/*
+          if-no-files-found: error
+          retention-days: 5
     
   publish:
     name: Repository Publishing
