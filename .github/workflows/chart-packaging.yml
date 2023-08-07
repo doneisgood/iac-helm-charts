@@ -24,10 +24,11 @@ jobs:
       DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_ACCESS_ACCOUNT }}
       DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_ACCESS_TOKEN }}
       OCI_PATH: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
-      config-path: ${{ needs.package.steps.checkout_step.ref }}
+      PACKAGED_PROJECT: "cybnity-platform"
+      #config-path: ${{ needs.package.steps.checkout_step.ref }}
       # See doc : https://github.com/atomicfi-engineering/action-build-push-chart-oci-registry
       # Path to chart. Required
-      chart-path: "packages/cybnity-platform-0.1.0+$(git rev-parse --short $GITHUB_SHA).tgz"
+      CHART_DEST: "packages"
       # URL of registry, excluding the protocol. Required.
       registry-url: registry-1.docker.io
       # Repository in registry to push to
@@ -42,6 +43,9 @@ jobs:
       # Enables step to delete all `*.tgz` files
       # Default: true
       delete-tgzs: true
+    outputs:
+      chart_path: ${{ env.CHART_PATH }}
+      package_version_name:  ${{ env.PACKAGE_VERSION_NAME }}
     steps:
       - name: Helm source codes checkout
         id: checkout_step
@@ -63,20 +67,24 @@ jobs:
       - name: Install Helm tool
         uses: azure/setup-helm@v3
 
-      - name: Helm Packaging
-        run: |
-          PACKAGE_VERSION_NAME="0.1.0+$(git rev-parse --short "$GITHUB_SHA")"
-          helm package cybnity-platform --version "$PACKAGE_VERSION_NAME" -d packages
-
       - if: ${{ env.update-dependencies }}
         name: Update Chart Dependencies
         shell: bash
         run: |
-          helm dependency update ${{ env.chart-path }}
-      - name: Package Chart
-        shell: bash
+          helm dependency update ${{ env.PACKAGED_PROJECT }}
+          
+      - name: Helm Packaging
         run: |
-          helm package ${{ env.chart-path }}
+          PACKAGE_VERSION_NAME="0.1.0+$(git rev-parse --short "$GITHUB_SHA")"
+          echo "PACKAGE_VERSION_NAME=$PACKAGE_VERSION_NAME" >> $GITHUB_ENV
+          helm package ${{ env.PACKAGED_PROJECT }} --version "$PACKAGE_VERSION_NAME" -d ${{ env.CHART_DEST }}
+          echo "CHART_PATH=$CHART_DEST/$PACKAGED_PROJECT-$PACKAGE_VERSION_NAME.tgz" >> $GITHUB_ENV
+
+      #- name: Package Chart
+      #  shell: bash
+      #  run: |
+      #    helm package ${{ env.CHART_PATH }}
+          
       - name: Helm Registry Login
         shell: bash
         run: |
