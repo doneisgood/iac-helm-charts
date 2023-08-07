@@ -83,7 +83,7 @@ jobs:
       # password: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
       # Enables step to delete all `*.tgz` files
       # Default: true
-      delete-tgzs: true
+      delete-tgzs: false
     steps:
       - name: Helm Registry Login
         shell: bash
