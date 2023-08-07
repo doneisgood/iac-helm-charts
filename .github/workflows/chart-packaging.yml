@@ -16,16 +16,13 @@ jobs:
     permissions:
       # permits an action to upload and publish packaged files
       contents: write
-      #pull-requests: write
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ github.token }}
-      #GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
       DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_ACCESS_ACCOUNT }}
       DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_ACCESS_TOKEN }}
       OCI_PATH: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
       PACKAGED_PROJECT: "cybnity-platform"
-      #config-path: ${{ needs.package.steps.checkout_step.ref }}
       # See doc : https://github.com/atomicfi-engineering/action-build-push-chart-oci-registry
       # Path to chart. Required
       CHART_DEST: "packages"
@@ -54,9 +51,6 @@ jobs:
           repository: ${{ github.repository }}
           token: ${{ github.token }}
           ref: ${{ inputs.branch_name }}
-        #with:
-          #persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
-        #  fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
 
       - name: Configure Git
         run: |
@@ -80,11 +74,6 @@ jobs:
           helm package ${{ env.PACKAGED_PROJECT }} --version "$PACKAGE_VERSION_NAME" -d ${{ env.CHART_DEST }}
           echo "CHART_PATH=$CHART_DEST/$PACKAGED_PROJECT-$PACKAGE_VERSION_NAME.tgz" >> $GITHUB_ENV
 
-      #- name: Package Chart
-      #  shell: bash
-      #  run: |
-      #    helm package ${{ env.CHART_PATH }}
-          
       - name: Helm Registry Login
         shell: bash
         run: |
@@ -111,80 +100,6 @@ jobs:
             [ -f "$file" ] || continue
             rm $file
           done
-          
-  #publish:
-  #  name: Package publish to Dockerhub repository
-  #  if: ${{ success() }}
-    #uses: atomicfi-engineering/action-build-push-chart-oci-registry@v1.3.0
-  #  uses: ./.github/workflows/push-chart-oci-registry.yml
-  #  needs: [package]
-  #  with:
-  #    config-path: ${{ needs.package.steps.checkout_step.ref }}
-      # See doc : https://github.com/atomicfi-engineering/action-build-push-chart-oci-registry
-      # Path to chart. Required
-  #    chart-path: "packages/cybnity-platform-0.1.0+$(git rev-parse --short $GITHUB_SHA).tgz"
-      # URL of registry, excluding the protocol. Required.
-  #    registry-url: registry-1.docker.io
-      # Repository in registry to push to
-  #    repository: cybnity
-      # Username to login to registry
-  #    username: cybnity
-      # Password to login to registry
-      # password: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
-      # Sets whether or not to update dependencies before packaging
-      # Default: true
-  #    update-dependencies: true
-      # Enables step to delete all `*.tgz` files
-      # Default: true
-  #    delete-tgzs: true
-  #  secrets: inherit
-          
-     # - name: Packaged Artifact Commit
-     #   run: |
-     #     git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-     #     git config user.name "$GITHUB_ACTOR"
-     #     git config --global url.https://$GH_ACCESS_TOKEN@github.com/.insteadOf https://github.com/
-     #     git remote -v
-     #     git fetch
-     #     git checkout main
-     #     CHART_PACKAGE_NAME="cybnity-platform-0.1.0+$(git rev-parse --short "$GITHUB_SHA").tgz"
-     #     cd packages
-     #     git add "$CHART_PACKAGE_NAME"
-     #     git commit -m "$CHART_PACKAGE_NAME $(date +%FT%T)"
-     #     git push origin main
-      
-     # - name: Pull Request about packages
-     #   run: |
-     #     gh pr create -B ${{ github.ref }} -H branch_to_merge --title 'Merge branch_to_merge into ${{ github.ref }}' --body 'Created by Github action (chart-packaging.yml workflow)'
-      
-      #- name: Push changes
-      #  uses: ad-m/github-push-action@master
-      #  with:
-      #    github_token: ${{ github.token }}
-      #    branch: ${{ github.ref }}
-        
-          #git push origin main:refs/heads/gh-branch
-          
-      #- uses: actions/checkout@v3
-      #- name: Helm Package Push
-      #  env:
-      #    SRC_FOLDER_PATH: 'transport'
-      #    TARGET_BRANCH: 'gh-branch'
-      #  run: |
-      #    files=$(find $SRC_FOLDER_PATH -type f) # get the file list
-      #    git config --global user.name "$GITHUB_ACTOR"
-      #    git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      #    git fetch                         # fetch branches
-      #    git checkout $TARGET_BRANCH       # checkout to recipient branch
-      #    git checkout ${GITHUB_REF##*/} -- $files # copy files from the source branch
-      #    git add -A
-      #    git diff-index --quiet HEAD ||  git commit -am "deploy files"  # commit to the repository (ignore if no modification)
-      #    git push origin $TARGET_BRANCH # push to remote branch
-          
-      #- name: Run chart-releaser
-      #  uses: helm/chart-releaser-action@v1.5.0
-      #  with:
-      #    charts_dir: repository
       #    skip_packaging: 'false'
       #  env:
       #    CR_TOKEN: ${{ github.token }}
