@@ -29,6 +29,7 @@ jobs:
       chart_path: ${{ env.CHART_PATH }}
       package_version_name:  ${{ env.PACKAGE_VERSION_NAME }}
       chart_dest: ${{ env.CHART_DEST }}
+      artifact_fullname: ${{ env.ARTIFACT_FULLNAME }}
     steps:
       - name: Helm source codes checkout
         id: checkout_step
@@ -57,12 +58,13 @@ jobs:
           PACKAGE_VERSION_NAME="0.1.0+$(git rev-parse --short "$GITHUB_SHA")"
           echo "PACKAGE_VERSION_NAME=$PACKAGE_VERSION_NAME" >> $GITHUB_ENV
           helm package ${{ env.PACKAGED_PROJECT }} --version "$PACKAGE_VERSION_NAME" -d ${{ env.CHART_DEST }}
-          echo "CHART_PATH=$CHART_DEST/$PACKAGED_PROJECT-$PACKAGE_VERSION_NAME.tgz" >> $GITHUB_ENV
+          echo "ARTIFACT_FULLNAME=$PACKAGED_PROJECT-$PACKAGE_VERSION_NAME.tgz" >> $GITHUB_ENV
+          echo "CHART_PATH=$CHART_DEST/$ARTIFACT_FULLNAME" >> $GITHUB_ENV
           
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
-          name: packaged-artifact
-          path: ${{ env.CHART_PATH }}
+          name: artifacts-directory
+          path: ${{ env.CHART_DEST }}
     
   publish:
     name: Repository Publishing
@@ -90,12 +92,13 @@ jobs:
       # Default: true
       delete-tgzs: true
     steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
-          name: packaged-artifact
+          name: artifacts-directory
           
       - name: Helm Registry Login
         shell: bash
+        working-directory: artifacts-directory
         run: |
           helm registry login \
           --username ${{ env.username }} \
@@ -104,8 +107,9 @@ jobs:
           
       - name: Push Chart
         shell: bash
+        working-directory: artifacts-directory
         run: |
-          cd ${{ env.CHART_DEST }}
+          #cd ${{ env.CHART_DEST }}
           for file in *.tgz; do
             [ -f "$file" ] || continue
             helm push $file oci://${{ env.registry-url }}/${{ env.repository }}
@@ -114,6 +118,7 @@ jobs:
       - name: Delete Chart Tarballs
         if: ${{ env.delete-tgzs }} == true
         shell: bash
+        working-directory: artifacts-directory
         run: |
           cd ${{ env.CHART_DEST }}
           for file in *.tgz; do
