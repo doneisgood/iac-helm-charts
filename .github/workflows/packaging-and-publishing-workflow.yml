@@ -56,8 +56,9 @@ jobs:
           PACKAGE_VERSION_NAME="$PROJECT_VERSION+$(git rev-parse --short "$GITHUB_SHA")"
           echo "PACKAGE_VERSION_NAME=$PACKAGE_VERSION_NAME" >> $GITHUB_ENV
           helm package ${{ env.PACKAGED_PROJECT }} --version "$PACKAGE_VERSION_NAME" -d ${{ env.CHART_DEST }}
-          echo "ARTIFACT_FULLNAME=$PACKAGED_PROJECT-$PACKAGE_VERSION_NAME.tgz" >> $GITHUB_ENV
-          echo "CHART_PATH=${{ env.CHART_DEST }}/${{ env.ARTIFACT_FULLNAME }}" >> $GITHUB_ENV
+          ARTIFACT_FULLNAME="$PACKAGED_PROJECT-$PACKAGE_VERSION_NAME.tgz"
+          echo "ARTIFACT_FULLNAME=$ARTIFACT_FULLNAME" >> $GITHUB_ENV
+          echo "CHART_PATH=${{ env.CHART_DEST }}/$ARTIFACT_FULLNAME" >> $GITHUB_ENV
           
       - uses: actions/upload-artifact@v3
         # See docc at https://github.com/actions/upload-artifact
