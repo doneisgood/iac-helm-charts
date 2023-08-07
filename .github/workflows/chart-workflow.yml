@@ -22,6 +22,9 @@ jobs:
       # See doc : https://github.com/atomicfi-engineering/action-build-push-chart-oci-registry
       # Path to chart. Required
       CHART_DEST: "packages"
+      # Sets whether or not to update dependencies before packaging
+      # Default: true
+      update-dependencies: true
     outputs:
       chart_path: ${{ env.CHART_PATH }}
       package_version_name:  ${{ env.PACKAGE_VERSION_NAME }}
@@ -78,9 +81,6 @@ jobs:
       username: cybnity
       # Password to login to registry
       # password: ${{ secrets.DOCKERHUB_OLIVIER_PATH }}
-      # Sets whether or not to update dependencies before packaging
-      # Default: true
-      update-dependencies: true
       # Enables step to delete all `*.tgz` files
       # Default: true
       delete-tgzs: true
@@ -113,7 +113,7 @@ jobs:
           done
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
+        uses: helm/chart-releaser-action@v1.5.0
         with:
           charts_dir: ${{ env.CHART_DEST }}
           #config: cr.yaml
