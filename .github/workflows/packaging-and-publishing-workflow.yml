@@ -55,15 +55,15 @@ jobs:
           ## Create and package unique version based on github sha
           PACKAGE_VERSION_NAME="$PROJECT_VERSION+$(git rev-parse --short "$GITHUB_SHA")"
           helm package ${{ env.PACKAGED_PROJECT }} --version "$PACKAGE_VERSION_NAME" -d ${{ env.CHART_DEST }}
-          ARTIFACT_FULLNAME="$PACKAGED_PROJECT-$PACKAGE_VERSION_NAME.tgz"
+          ARTIFACT_FULLNAME="${{ env.PACKAGED_PROJECT }}-$PACKAGE_VERSION_NAME.tgz"
           CHART_PATH="${{ env.CHART_DEST }}/$ARTIFACT_FULLNAME"
           echo "CHART_PATH=$CHART_PATH" >> $GITHUB_ENV
           
       - uses: actions/upload-artifact@v3
         # See docc at https://github.com/actions/upload-artifact
         with:
-          name: "${{ env.ARTIFACT_FULLNAME }}"
-          path: "${{ env.CHART_PATH }}"
+          name: ${{ env.ARTIFACT_FULLNAME }}
+          path: ${{ env.CHART_PATH }}
           if-no-files-found: error
           retention-days: 5
     
