@@ -60,9 +60,9 @@ jobs:
           echo "CHART_PATH=$CHART_DEST/$PACKAGED_PROJECT-$PACKAGE_VERSION_NAME.tgz" >> $GITHUB_ENV
           
       - uses: actions/upload-artifact@v2
-          with:
-            name: packaged-artifact
-            path: ${{ env.CHART_PATH }}
+        with:
+          name: packaged-artifact
+          path: ${{ env.CHART_PATH }}
     
   publish:
     name: Repository Publishing
