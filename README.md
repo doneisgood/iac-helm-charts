@@ -24,6 +24,13 @@ Once Helm has been set up correctly, add the repo as follows:
 helm repo add cybnity https://cybnity.github.io/iac-helm-charts
 ```
 
+See the packaged versions of CYBNITY platform that are hosted on `https://hub.docker.com/r/cybnity/cybnity-platform/tags` repository.
+
+To pull a version from the CYBNITY docker hub repository where packaged Helm project are store:
+```shell
+helm pull oci://registry-1.docker.io/cybnity/cybnity-platform --version 0.1.0_0d0e972
+```
+
 If you had already added this repo earlier, run `helm repo update` to retrieve the lates versions of the packages.
 
 You can then run `helm search repo cybnity` to see the charts.
