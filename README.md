@@ -44,3 +44,6 @@ To uninstall a chart:
 ```shell
 helm delete <chart-name>
 ```
+
+# RELEASES HISTORY
+- [V0 - FRAMEWORK changes list](v0-changes.md)
