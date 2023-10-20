@@ -44,6 +44,8 @@ deployment:
   imageHealthCheckPeriodSeconds: 300
   imageHttpHealthLivenessProbe: /healthcheck
   imageHttpHealthReadinessProbe: /healthcheck
+  authServerUrl: /auth/
+  cluster: "production"
 
 service:
   # Networking service type (e.g ClusterIP; NodePort is recommended for Minikube). See https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types for more detail
